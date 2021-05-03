@@ -19,7 +19,6 @@ MainProtectedMode:
   mov ebx, MessageRebooting		; Notify we've completed and need to reboot
   call PrintStringProtectedMode
 
-  jmp $
   mov al, 0xFE				; Reboot us (source: https://forum.osdev.org/viewtopic.php?t=13113)
   out 0x64, al
 

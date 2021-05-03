@@ -1,19 +1,29 @@
-void main() {
-  char* videoMemory = (char*) 0xb8000;
-  int i =0;
-  for (i;i < (80*50); i+=2) {
-    *(videoMemory + i) = ' ';
-    *(videoMemory + i + 1) = 0x3F;
-  }
+#include "kernel.h"
+#include "drivers/screen.h"
 
-  char* toPrint = "Kernel Booted";
-  i = 0;
-  int j = 162;
-  char c = toPrint[0];
-  while (c != '\0') {
-      *(videoMemory + j) = c;
-      i++;
-      j+=2;
-      c = toPrint[i];
+void main() {
+  screen_setup();
+  screen_print("Kernel loaded");
+  screen_print(" and more this is a really long line that I'm going to \nwrite to make it overflow onto the second line\n");
+  
+  int i = 0;
+  while (true)
+  {
+  for (i = 0; i < 50; i++) {
+    char c[4];
+    int first = i / 10;
+    int second = i % 10;
+    c[0] = first + 48;
+    c[1] = second + 48;
+    c[2] = '\n';
+    c[3] = '\0';
+    screen_print(c);
+    int j = 0;
+
+    for (j = 0; j < 100000000; j++) {
+      int a = 1;
+      int b = a + 2;
+    }
+  }
   }
 }
