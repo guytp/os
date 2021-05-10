@@ -2,9 +2,11 @@
 #include "io.h"
 
 int screenBufferLocation = 0;
+byte screenStyle = 0xF;
 
 void screen_setup() {
-  screen_clear();
+    screen_text_style(White, LightBlue); // 0x3F
+    screen_clear();
 }
 
 byte screen_get_buffer_x() {
@@ -22,10 +24,15 @@ void screen_clear() {
 
     for (i = 0; i < screenSize * 2; i += 2) {
         c[i] = ' ';
-        c[i + 1] = WHITE_ON_BLUE;
+        c[i + 1] = screenStyle;
     }
 
     screen_cursor_set_location(0, 0);
+}
+
+void screen_text_style(TextModeColour foreground, TextModeColour background) {
+    byte style = (byte)background << 4 | (byte)foreground;
+    screenStyle = style;
 }
 
 void screen_cursor_set_location(byte x, byte y) {
